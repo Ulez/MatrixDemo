@@ -14,7 +14,6 @@ public class TestPluginListener extends DefaultPluginListener {
     public static final String TAG = "Matrix.TestPluginListener";
     public TestPluginListener(Context context) {
         super(context);
-        
     }
 
     @Override
