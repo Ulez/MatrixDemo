@@ -33,6 +33,18 @@ android {
             pickFirst '**/*.so'
         }
     }
+    task copyFileForMethodMapping {
+        group = ""
+        description = 'Copies methodMapping.txt file from project to device...'
+        doFirst {
+            println 'Getting file for copy'
+            def sourceFile = new File(project.buildDir.absolutePath + '/outputs/mapping/debug/methodMapping.txt')
+            exec {
+                println "sourceFile: " + sourceFile.absolutePath
+                commandLine android.getAdbExecutable(), 'push', "${sourceFile.absolutePath}", '/storage/emulated/0'
+            }
+        }
+    }
 }
 
 dependencies {

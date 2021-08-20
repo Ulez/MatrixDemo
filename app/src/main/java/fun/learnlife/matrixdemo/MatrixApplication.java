@@ -18,20 +18,19 @@ package fun.learnlife.matrixdemo;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
+import android.util.Log;
 
 import com.tencent.matrix.Matrix;
-import com.tencent.matrix.batterycanary.BatteryMonitorPlugin;
-import com.tencent.matrix.iocanary.IOCanaryPlugin;
-import com.tencent.matrix.iocanary.config.IOConfig;
-import com.tencent.matrix.resource.ResourcePlugin;
-import com.tencent.matrix.resource.config.ResourceConfig;
 import com.tencent.matrix.trace.TracePlugin;
 import com.tencent.matrix.trace.config.TraceConfig;
 import com.tencent.matrix.util.MatrixLog;
 import com.tencent.sqlitelint.SQLiteLint;
-import com.tencent.sqlitelint.SQLiteLintPlugin;
 import com.tencent.sqlitelint.config.SQLiteLintConfig;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.HashMap;
 
 /**
  * Created by caichongyang on 17/5/18.
@@ -39,7 +38,7 @@ import com.tencent.sqlitelint.config.SQLiteLintConfig;
 
 public class MatrixApplication extends Application {
     private static final String TAG = "Matrix.Application";
-
+    public static HashMap<Integer, String> methodMap = new HashMap<>();
     private static Context sContext;
 
     private static SQLiteLintConfig initSQLiteLintConfig() {
@@ -59,6 +58,7 @@ public class MatrixApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        createMethodMap();
         DynamicConfigImplDemo dynamicConfig = new DynamicConfigImplDemo();
         boolean matrixEnable = dynamicConfig.isMatrixEnable();
         boolean fpsEnable = dynamicConfig.isFPSEnable();
@@ -92,6 +92,25 @@ public class MatrixApplication extends Application {
         MatrixLog.i("Matrix.HackCallback", "end:%s", System.currentTimeMillis());
 
 
+    }
+
+    private void createMethodMap() {
+        try {
+            File file = new File("sdcard/methodMapping.txt");
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            StringBuffer sb = new StringBuffer();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);      //appends line to string buffer
+                sb.append("\n");     //line feed
+                String[] contents = line.split(",");
+                methodMap.put(Integer.parseInt(contents[0]), contents[2].replace('\n', ' '));
+            }
+            fr.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static Context getContext() {

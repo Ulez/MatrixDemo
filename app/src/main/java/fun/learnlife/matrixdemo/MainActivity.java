@@ -24,8 +24,8 @@ import fun.learnlife.matrixdemo.issue.IssueFilter;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, IAppForeground {
 
     private static String TAG = "Matrix.TestTraceMainActivity";
-    FrameDecorator decorator;
-    private static final int PERMISSION_REQUEST_CODE = 0x02;
+//    FrameDecorator decorator;
+//    private static final int PERMISSION_REQUEST_CODE = 0x02;
 
 
     @Override
@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             MatrixLog.i(TAG, "plugin-trace start");
             plugin.start();
         }
-        decorator = FrameDecorator.getInstance(this);
-        if (!canDrawOverlays()) {
-            requestWindowPermission();
-        } else {
-            decorator.show();
-        }
+//        decorator = FrameDecorator.getInstance(this);
+//        if (!canDrawOverlays()) {
+//            requestWindowPermission();
+//        } else {
+//            decorator.show();
+//        }
 
         AppActiveMatrixDelegate.INSTANCE.addListener(this);
 
@@ -55,11 +55,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button3).setOnClickListener(this);
     }
 
-    private void requestWindowPermission() {
-        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:" + getPackageName()));
-        startActivityForResult(intent, PERMISSION_REQUEST_CODE);
-    }
+//    private void requestWindowPermission() {
+//        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+//                Uri.parse("package:" + getPackageName()));
+//        startActivityForResult(intent, PERMISSION_REQUEST_CODE);
+//    }
 
     @Override
     public void onClick(View v) {
@@ -77,28 +77,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        MatrixLog.i(TAG, "requestCode:%s resultCode:%s", requestCode, resultCode);
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (canDrawOverlays()) {
-                decorator.show();
-            } else {
-                Toast.makeText(this, "fail to request ACTION_MANAGE_OVERLAY_PERMISSION", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        MatrixLog.i(TAG, "requestCode:%s resultCode:%s", requestCode, resultCode);
+//        if (requestCode == PERMISSION_REQUEST_CODE) {
+//            if (canDrawOverlays()) {
+//                decorator.show();
+//            } else {
+//                Toast.makeText(this, "fail to request ACTION_MANAGE_OVERLAY_PERMISSION", Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
 
 
-    private boolean canDrawOverlays() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return Settings.canDrawOverlays(this);
-        } else {
-            return true;
-        }
-    }
+//    private boolean canDrawOverlays() {
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            return Settings.canDrawOverlays(this);
+//        } else {
+//            return true;
+//        }
+//    }
 
     private void method(long i) {
         SystemClock.sleep(i);
@@ -106,13 +106,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onForeground(boolean isForeground) {
-        if (!canDrawOverlays()) {
-            return;
-        }
-        if (!isForeground) {
-            decorator.dismiss();
-        } else {
-            decorator.show();
-        }
+//        if (!canDrawOverlays()) {
+//            return;
+//        }
+//        if (!isForeground) {
+//            decorator.dismiss();
+//        } else {
+//            decorator.show();
+//        }
     }
 }
