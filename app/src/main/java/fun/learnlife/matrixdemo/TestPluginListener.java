@@ -27,7 +27,7 @@ public class TestPluginListener extends DefaultPluginListener {
     @Override
     public void onReportIssue(Issue issue) {
         super.onReportIssue(issue);
-        MatrixLog.e(TAG, issue.toString());
+//        MatrixLog.e(TAG, issue.toString());
         JSONObject content = issue.getContent();
         try {
             String stack = content.getString("stack");
